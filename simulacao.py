@@ -138,7 +138,7 @@ def main():
     if len(sys.argv) not in (2, 3) or sys.argv[1] not in AGENTES:
         opcoes = ", ".join(f'"{nome}"' for nome in AGENTES)
         sys.exit(f"Uso: python simulacao.py <tipo_agente> [seed]\nTipos: {opcoes}")
-    seed = int(sys.argv[2]) if len(sys.argv) == 3 else None
+    seed = 42
     simular(AGENTES[sys.argv[1]], seed)
 
 
