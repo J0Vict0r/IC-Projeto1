@@ -34,7 +34,7 @@ SIMBOLO_OBSTACULO = "O"
 SIMBOLO_AGENTE = "R"
 
 # Parâmetros da simulação
-LINHAS, COLUNAS = 6, 6
+LINHAS, COLUNAS = 8, 8
 INTERVALO_MS = 500  # pausa entre iterações, em milissegundos
 MAX_PASSOS = 500
 

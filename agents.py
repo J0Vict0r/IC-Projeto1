@@ -135,18 +135,25 @@ class ModelBasedReflexAgent:
         self.known[self.pos] = "dirty" if percept["dirty"] else "clean"
 
     def _choose_direction(self):
-        """Prioriza mover para célula desconhecida > suja > limpa; evita obstáculo."""
+        """
+        Prioriza mover para célula desconhecida > suja > limpa;
+        NUNCA escolhe uma direção cujo destino já é um obstáculo conhecido.
+        Retorna None se todas as direções vizinhas já forem obstáculos
+        conhecidos (agente cercado): nesse caso não há movimento seguro.
+        """
         candidatos = []
         for direcao, (dr, dc) in VacuumEnvironment.MOVES.items():
             destino = (self.pos[0] + dr, self.pos[1] + dc)
             estado = self.known.get(destino, "unknown")
             if estado == "obstacle":
-                continue
+                continue  # exclui explicitamente destinos já sabidos bloqueados
             prioridade = {"unknown": 0, "dirty": 1, "clean": 2}[estado]
             candidatos.append((prioridade, direcao))
 
         if not candidatos:
-            return self.rng.choice(list(VacuumEnvironment.MOVES.keys()))
+            # Cercado por obstáculos/limites conhecidos em todas as direções:
+            # não existe ação de movimento que não repita uma colisão.
+            return None
 
         melhor_prioridade = min(candidatos, key=lambda x: x[0])[0]
         melhores = [d for p, d in candidatos if p == melhor_prioridade]
@@ -158,7 +165,10 @@ class ModelBasedReflexAgent:
         if percept["dirty"]:
             acao = "Suck"
         else:
-            acao = self._choose_direction()
+            direcao = self._choose_direction()
+            # Se estiver cercado por obstáculos conhecidos, não tenta se
+            # mover (evitaria repetir uma colisão já conhecida): faz NoOp.
+            acao = direcao if direcao is not None else "NoOp"
 
         self.last_action = acao
         return acao
