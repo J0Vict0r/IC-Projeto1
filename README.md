@@ -72,26 +72,26 @@ IC-Projeto1-feature-prototype/
 
 ## 5. Análise dos gráficos e resultados
 
-**Gráfico 1 — Taxa de limpeza total por agente**
-- O Agente Reflexo com Modelo concluiu a limpeza completa em 80% das configurações de mapa testadas, enquanto o Agente Reflexo Simples não concluiu em nenhuma delas (0%), evidenciando que manter um modelo interno aumenta substancialmente a chance de atingir o objetivo dentro do limite de passos.
-- O fato de o agente com modelo não atingir 100% mostra que sua exploração ainda depende de sorteio entre direções empatadas em prioridade (`_choose_direction`), de modo que, em configurações menos favoráveis, ele também pode não concluir a limpeza dentro de `MAX_STEPS`.
+**Gráfico 1 — M1 e M2 por configuração**
+- A curva do Agente Reflexo com Modelo permanece acima da curva do Agente Reflexo Simples em praticamente todas as configurações, tanto em M1 quanto em M2, mostrando que sua vantagem não se restringe a mapas específicos, mas se mantém de forma consistente ao longo do experimento.
+- A curva do Agente Reflexo Simples oscila com mais intensidade entre configurações (com quedas acentuadas em mapas específicos), refletindo a dependência de seu desempenho em relação ao layout de obstáculos de cada configuração, enquanto a curva do agente com modelo se mantém comparativamente estável e próxima do teto de M1.
 
-**Gráfico 2 — Passos e movimentos médios até a simulação parar, por agente**
-- O Agente Reflexo Simples atinge, em média, um número de passos próximo do limite máximo (500), consistente com a taxa de conclusão nula do Gráfico 1: na maioria das execuções ele é interrompido pelo limite antes de terminar.
-- A diferença entre passos e movimentos é maior para o agente simples: como cada ação `Suck` conta como passo mas não como movimento, e o número de quadrados aspirados é limitado pela sujeira inicial, boa parte dessa diferença corresponde a colisões (`bump`) contra obstáculos e limites do grid, indicando deslocamento pouco eficiente.
+**Gráfico 2 — Média de desempenho (M1 e M2)**
+- Na métrica M1, o Agente Reflexo com Modelo limpa, em média, mais quadrados que o Agente Reflexo Simples, resultado coerente com sua maior taxa de conclusão (Gráfico 5) e menor sujeira residual (Gráfico 3).
+- Na métrica M2, ambos os agentes apresentam média negativa, pois o número de movimentos supera o de quadrados limpos em um grid deste tamanho; ainda assim, a penalidade do agente com modelo é bem menor, refletindo o menor número médio de movimentos observado no Gráfico 4.
 
 **Gráfico 3 — Sujeira deixada em cada configuração de mapa, por agente**
 - Em todas as 10 configurações, o Agente Reflexo Simples deixou mais sujeira remanescente que o Agente Reflexo com Modelo, que terminou a maioria dos mapas sem nenhuma célula suja restante.
 - A quantidade de sujeira deixada pelo agente simples varia bastante entre mapas (de poucas células até valores bem maiores em configurações específicas), o que é esperado de um agente sem memória, cujo desempenho depende fortemente do layout de obstáculos sorteado em cada configuração.
 
-**Gráfico 4 — Média de desempenho (M1 e M2)**
-- Na métrica M1, o Agente Reflexo com Modelo limpa, em média, mais quadrados que o Agente Reflexo Simples, resultado coerente com sua maior taxa de conclusão (Gráfico 1) e menor sujeira residual (Gráfico 3).
-- Na métrica M2, ambos os agentes apresentam média negativa, pois o número de movimentos supera o de quadrados limpos em um grid deste tamanho; ainda assim, a penalidade do agente com modelo é bem menor, refletindo o menor número médio de movimentos observado no Gráfico 2.
+**Gráfico 4 — Passos e movimentos médios até a simulação parar, por agente**
+- O Agente Reflexo Simples atinge, em média, um número de passos próximo do limite máximo (500), consistente com a taxa de conclusão nula do Gráfico 5: na maioria das execuções ele é interrompido pelo limite antes de terminar.
+- A diferença entre passos e movimentos é maior para o agente simples: como cada ação `Suck` conta como passo mas não como movimento, e o número de quadrados aspirados é limitado pela sujeira inicial, boa parte dessa diferença corresponde a colisões (`bump`) contra obstáculos e limites do grid, indicando deslocamento pouco eficiente.
 
-**Gráfico 5 — M1 e M2 por configuração**
-- A curva do Agente Reflexo com Modelo permanece acima da curva do Agente Reflexo Simples em praticamente todas as configurações, tanto em M1 quanto em M2, mostrando que sua vantagem não se restringe a mapas específicos, mas se mantém de forma consistente ao longo do experimento.
-- A curva do Agente Reflexo Simples oscila com mais intensidade entre configurações (com quedas acentuadas em mapas específicos), refletindo a dependência de seu desempenho em relação ao layout de obstáculos de cada configuração, enquanto a curva do agente com modelo se mantém comparativamente estável e próxima do teto de M1.
-
+**Gráfico 5 — Taxa de limpeza total por agente**
+- O Agente Reflexo com Modelo concluiu a limpeza completa em 80% das configurações de mapa testadas, enquanto o Agente Reflexo Simples não concluiu em nenhuma delas (0%), evidenciando que manter um modelo interno aumenta substancialmente a chance de atingir o objetivo dentro do limite de passos.
+- O fato de o agente com modelo não atingir 100% mostra que sua exploração ainda depende de sorteio entre direções empatadas em prioridade (`_choose_direction`), de modo que, em configurações menos favoráveis, ele também pode não concluir a limpeza dentro de `MAX_STEPS`.
+  
 ## 6. Como executar o projeto
 
 Execução do agente baseado em modelo:
